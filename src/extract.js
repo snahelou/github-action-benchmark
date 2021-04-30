@@ -172,10 +172,17 @@ function extractGatlingJsResult(output) {
     }
     const ret = [];
     for (const content in json.contents) {
-        console.log(content);
-        const name = json.contents[content].name;
-        const value = json.contents[content].stats.percentiles3.total;
-        const unit = 'ms';
+        let name = `95th percentile - ${json.contents[content].name}`;
+        let value = json.contents[content].stats.percentiles3.total;
+        let unit = 'ms';
+        ret.push({ name, value, unit });
+        name = `OK - ${json.contents[content].name}`;
+        value = json.contents[content].stats.numberOfRequests.ok;
+        unit = 'requests';
+        ret.push({ name, value, unit });
+        name = `KO - ${json.contents[content].name}`;
+        value = json.contents[content].stats.numberOfRequests.ko;
+        unit = 'requests';
         ret.push({ name, value, unit });
     }
     return ret;
