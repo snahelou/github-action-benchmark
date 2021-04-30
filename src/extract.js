@@ -162,6 +162,24 @@ function extractGoogleCppResult(output) {
         return { name, value, unit, extra };
     });
 }
+function extractGatlingJsResult(output) {
+    let json;
+    try {
+        json = JSON.parse(output);
+    }
+    catch (err) {
+        throw new Error(`Output file for 'gatling' must be JSON file from stats.json: ${err.message}`);
+    }
+    const ret = [];
+    for (const content in json.contents) {
+        console.log(content);
+        const name = json.contents[content].name;
+        const value = json.contents[content].stats.percentiles3.total;
+        const unit = 'ms';
+        ret.push({ name, value, unit });
+    }
+    return ret;
+}
 function extractCatch2Result(output) {
     // Example:
     // benchmark name samples       iterations    estimated <-- Start benchmark section
@@ -271,6 +289,9 @@ async function extractResult(config) {
             break;
         case 'catch2':
             benches = extractCatch2Result(output);
+            break;
+        case 'gatling':
+            benches = extractGatlingJsResult(output);
             break;
         default:
             throw new Error(`FATAL: Unexpected tool: '${tool}'`);
