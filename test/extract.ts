@@ -91,14 +91,34 @@ describe('extractResult()', function() {
             tool: 'gatling',
             expected: [
                 {
-                    name: 'BenchmarkFib10',
+                    name: '95th percentile - BenchmarkFib10',
                     unit: 'ms',
                     value: 247,
                 },
                 {
-                    name: 'BenchmarkFib20',
+                    name: 'OK - BenchmarkFib10',
+                    unit: 'requests',
+                    value: 20,
+                },
+                {
+                    name: 'KO - BenchmarkFib10',
+                    unit: 'requests',
+                    value: 0,
+                },
+                {
+                    name: '95th percentile - BenchmarkFib20',
                     unit: 'ms',
                     value: 23,
+                },
+                {
+                    name: 'OK - BenchmarkFib20',
+                    unit: 'requests',
+                    value: 20,
+                },
+                {
+                    name: 'KO - BenchmarkFib20',
+                    unit: 'requests',
+                    value: 0,
                 },
             ],
         },
